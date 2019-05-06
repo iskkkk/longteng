@@ -27,12 +27,6 @@
 
         <dependency>
             <groupId>com.alon</groupId>
-            <artifactId>lt-mapper</artifactId>
-            <version>${mapper.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alon</groupId>
             <artifactId>lt-service</artifactId>
             <version>${service.version}</version>
         </dependency>
