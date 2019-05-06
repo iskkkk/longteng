@@ -6,5 +6,5 @@ lt-model    暂时不需要依赖其他子模块
 lt-mapper   依赖model模块，以及mysql,mybatis ...依赖  
 lt-service  依赖mapper模块  
 lt-simpl    依赖service模块  
-lt-web     依赖simpl模板，（这里就不需要引用model,mapper，service,common了，以为已经间接引用了）  
+lt-web     依赖simpl模板，（这里就不需要引用model,mapper，service,common了，因为已经间接引用了）  
 
