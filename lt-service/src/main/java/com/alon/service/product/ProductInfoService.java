@@ -13,4 +13,13 @@ public interface ProductInfoService {
       * @return java.util.List<com.alon.model.ProductInfo>
     */
     List<ProductInfo> getInfo(ProductInfo info);
+
+    /**
+      * 方法表述: 将数据从mysql中上传到es中
+      * @Author 一股清风
+      * @Date 17:43 2019/5/7
+      * @param       info
+      * @return void
+    */
+    void saveEsInfo(ProductInfo info);
 }
