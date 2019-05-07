@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface ProductInfoService {
     /**
-     * 获取商品信息
-     * @auther: zoujiulong
-     * @date: 2019/5/5   18:49
-    * @param info
-     *
-     */
+      * @Author 一股清风
+      * @Description 获取商品信息
+      * @Date 19:23 2019/5/6
+     * @param       info
+      * @return java.util.List<com.alon.model.ProductInfo>
+    */
     List<ProductInfo> getInfo(ProductInfo info);
 }

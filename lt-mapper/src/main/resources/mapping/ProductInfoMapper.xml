@@ -13,15 +13,24 @@
         <id property="id" column="id" />
 
         <!-- 定义普通属性 -->
-        <result property="name" column="name" />
-        <result property="spiId" column="spi_id" />
+        <result property="spuId" column="spu_id" />
+        <result property="price" column="price" />
         <result property="weight" column="weight" />
-        <result property="productDesc" column="product_desc" />
+        <result property="skuName" column="sku_name" />
+        <result property="skuDesc" column="sku_desc" />
+        <result property="tmId" column="tm_id" />
+        <result property="catalog3Id" column="catalog3_id" />
+        <result property="skuDefaultImg" column="sku_default_img" />
     </resultMap>
     <select id="getInfo" parameterType="com.alon.model.ProductInfo"
             resultMap="infoMap">
         SELECT
-        id,name,spi_id,weight,product_desc
-        FROM product_info
+        id,spu_id,price,weight,sku_name,sku_desc,tm_id,catalog3_id,sku_default_img
+        FROM product_info p
+        <where>
+            <if test="id != null">
+                p.id = #{id}
+            </if>
+        </where>
     </select>
 </mapper>
