@@ -23,12 +23,20 @@ public class ApiController {
       log.info("======开始=========");
       return infoService.getInfo(new ProductInfo());
     }
+
     @PostMapping("/onSale")
     public String onSale() {
         List<ProductInfo> infos = infoService.getInfo(new ProductInfo());
         for (ProductInfo info : infos) {
             infoService.saveEsInfo(info);
         }
+        return "OK";
+    }
+
+    @PostMapping("/getSearchInfo")
+    public String getSearchInfo(ProductInfo info) {
+        info.setSkuName("小米");
+        infoService.getEsData(info);
         return "OK";
     }
 }

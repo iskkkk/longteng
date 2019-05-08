@@ -3,6 +3,7 @@ package com.alon.service.product;
 import com.alon.model.ProductInfo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProductInfoService {
     /**
@@ -22,4 +23,13 @@ public interface ProductInfoService {
       * @return void
     */
     void saveEsInfo(ProductInfo info);
+
+    /**
+      * 方法表述: 查询es
+      * @Author 一股清风
+      * @Date 14:15 2019/5/8
+      * @param       info
+      * @return java.util.Map
+    */
+    Map getEsData(ProductInfo info);
 }
