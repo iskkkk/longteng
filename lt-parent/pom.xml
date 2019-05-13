@@ -40,6 +40,10 @@
         <druid.version>1.1.10</druid.version>
         <pagehelper.version>5.1.4</pagehelper.version>
         <jest.version>6.3.1</jest.version>
+        <webocket.version>1.3.5.RELEASE</webocket.version>
+        <servlet-api.version>2.5</servlet-api.version>
+        <dom4j.version>1.6.1</dom4j.version>
+        <jdom.version>2.0.2</jdom.version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -122,6 +126,31 @@
                 <groupId>io.searchbox</groupId>
                 <artifactId>jest</artifactId>
                 <version>${jest.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-websocket</artifactId>
+                <version>${webocket.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>${servlet-api.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>${dom4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jdom</groupId>
+                <artifactId>jdom</artifactId>
+                <version>${jdom.version}</version>
             </dependency>
 
         </dependencies>

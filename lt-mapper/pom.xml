@@ -14,6 +14,7 @@
 
     <properties>
         <model.version>1.0-SNAPSHOT</model.version>
+        <common.version>1.0-SNAPSHOT</common.version>
     </properties>
 
     <dependencies>
@@ -21,6 +22,12 @@
             <groupId>com.alon</groupId>
             <artifactId>lt-model</artifactId>
             <version>${model.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alon</groupId>
+            <artifactId>lt-common</artifactId>
+            <version>${common.version}</version>
         </dependency>
 
         <dependency>
