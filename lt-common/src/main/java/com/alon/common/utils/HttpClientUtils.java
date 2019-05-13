@@ -1,6 +1,5 @@
 package com.alon.common.utils;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -16,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
-@Slf4j
 public class HttpClientUtils {
     public static String post(String url, String xml) {
         System.out.println("===============开始请求=============");

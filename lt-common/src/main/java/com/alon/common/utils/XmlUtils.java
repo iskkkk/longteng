@@ -1,6 +1,5 @@
 package com.alon.common.utils;
 
-import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -18,7 +17,6 @@ import java.util.*;
  * @Author : zoujiulong
  * @Date : 2018/9/6   14:59
  */
-@Slf4j
 public class XmlUtils {
     
     /**
