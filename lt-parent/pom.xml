@@ -12,6 +12,7 @@
         <module>../lt-mapper</module>
         <module>../lt-service</module>
         <module>../lt-simpl</module>
+        <module>../lt-rabbitmq</module>
     </modules>
 
     <packaging>pom</packaging>
