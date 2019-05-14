@@ -28,7 +28,7 @@ spring:
     #es地址
   elasticsearch:
     jest:
-      uris: http://127.0.0.1:9200
+      uris: http://192.168.16.128:9200
 
 mybatis:
   mapper-locations: classpath*:mapping/*.xml

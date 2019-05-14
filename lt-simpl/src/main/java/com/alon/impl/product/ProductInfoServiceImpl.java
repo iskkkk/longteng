@@ -8,6 +8,7 @@ import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;
@@ -107,7 +108,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         //创建QueryBuilder对象（bool）
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
         //根据条件进行查询数据
-        if (info.getSkuName() != "" && info.getSkuName().length() > 0) {
+        if (StringUtils.isNotBlank(info.getSkuName())) {
             //创建一个TermQuery对象
             TermQueryBuilder termQueryBuilder = new TermQueryBuilder("skuName",info.getSkuName());
             //将termQueryBuilder添加到must中，并将must赋给bool

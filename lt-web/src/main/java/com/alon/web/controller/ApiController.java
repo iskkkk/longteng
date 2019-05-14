@@ -39,4 +39,5 @@ public class ApiController {
         infoService.getEsData(info);
         return "OK";
     }
+
 }
