@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * @ClassName GlobalExceptionHandler
- * @Description TODO
+ * @Description 自定义全局异常拦截器
  * @Author 一股清风
  * @Date 2019/5/17 14:44
  * @Version 1.0
