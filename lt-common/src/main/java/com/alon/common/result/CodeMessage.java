@@ -40,7 +40,7 @@ public class CodeMessage {
       * @return com.alon.common.result.CodeMessage
     */
     public CodeMessage fillArgs(Object... args) {
-        int code = this.code;
+        Integer code = this.code;
         String message = String.format(this.message, args);
         return new CodeMessage(code, message);
     }
