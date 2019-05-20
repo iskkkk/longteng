@@ -89,8 +89,9 @@ public class MD5Util {
 			"6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
 
 	public static void main(String[] args) {
-		System.out.println(inputPassToDbPass("123456",NumberUtil.getRandomString(6)));
-		System.out.println(inputPassToDbPass("123456",NumberUtil.getRandomString(6)));
+//		System.out.println(inputPassToDbPass("123456",NumberUtil.getRandomString(6)));
+//		System.out.println(inputPassToDbPass("123456",NumberUtil.getRandomString(6)));
+		System.out.println(formPassToDBPass("123","1a2b3c4d"));
 	}
 
 }
