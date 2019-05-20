@@ -2,7 +2,6 @@ package com.alon.web;
 
 import com.alon.amqp.model.Employee;
 import com.alon.amqp.producer.MessageProducer;
-import com.alon.common.utils.DBUtil;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
@@ -66,10 +65,5 @@ public class LtWebApplicationTests {
 
     @Test
     public void testDBU() {
-        try {
-            DBUtil.getConn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
