@@ -29,6 +29,8 @@ spring:
   elasticsearch:
     jest:
       uris: http://192.168.16.128:9200
+  profiles:
+    include: mq
 
 mybatis:
   mapper-locations: classpath*:mapping/*.xml
