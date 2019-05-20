@@ -19,7 +19,10 @@ import java.util.List;
 @Mapper
 public interface GoodsMapper {
 
-    @Select("select g.*, sg.stock_count, sg.start_date, sg.end_date, sg.seckill_price, sg.version from lt_goods_seckill sg left join lt_goods g on sg.goods_id = g.id")
+    @Select("select g.id goodId,g.goods_name goodsName,g.goods_title goodsTitle,g.goods_img goodsImg, " +
+            "g.goods_detail goodsDetail ,g.goods_price goodsPrice,g.goods_stock goodsStock," +
+            "sg.stock_count stockCount, sg.start_date startDate, sg.end_date endDate," +
+            " sg.seckill_price seckillPrice, sg.version from lt_goods_seckill sg left join lt_goods g on sg.goods_id = g.id")
     public List<GoodsVo> listGoodsVo();
 
     @Select("select g.*, sg.stock_count, sg.start_date, sg.end_date, sg.seckill_price, sg.version  from lt_goods_seckill sg left join lt_goods g  on sg.goods_id = g.id where g.id = #{goodsId}")

@@ -20,6 +20,11 @@ public class MQSender {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    /*public void send(Object message){
+        log.info("send message:" + message);
+        rabbitTemplate.convertAndSend(MQConfig.QUEUE, message);
+    }*/
+
     public void sendTopic(Object message) {
         String msg = RedisUtil.beanToString(message);
         log.info("send topic message:"+msg);
