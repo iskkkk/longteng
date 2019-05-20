@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+            http://www.springframework.org/schema/rabbit
+                http://www.springframework.org/schema/rabbit/spring-rabbit-1.6.xsd">
+    <!--设置连接工厂配置基本参数-->
+    <rabbit:connection-factory id="connectionFactory" host="192.168.16.128" username="alon"
+                               password="123456" virtual-host="/test"></rabbit:connection-factory>
+    <!--声明一个名为topicExchange的Topic交换机，如果这个交换机不存在，则自动创建-->
+    <rabbit:topic-exchange name="topicExchange" auto-declare="true">
+
+    </rabbit:topic-exchange>
+
+    <!--spring为我们封装了rabbitTemplate对象来简化生产者发送数据的过程，对常用的方法进行了封装-->
+    <rabbit:template id="template" connection-factory="connectionFactory" exchange="topicExchange"></rabbit:template>
+
+    <!--在生产者中配置template对象，用于发送数据-->
+    <bean id="newsProducer" class="com.alon.springExchange.exchange.NewsProducer">
+        <property name="rabbitTemplate" ref="template"/>
+    </bean>
+
+    <!--RabbitAdmin对象用于创建、绑定、管理队列与交换机-->
+    <rabbit:admin id="rabbitAdmin" connection-factory="connectionFactory"/>
+
+</beans>

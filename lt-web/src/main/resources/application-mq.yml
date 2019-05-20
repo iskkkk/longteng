@@ -1,0 +1,28 @@
+spring:
+  rabbitmq:
+    host: 192.168.16.128
+    username: alon
+    password: 123456
+    virtual-host: /test
+    connection-timeout: 1000ms
+#producer
+#confirmListener
+    publisher-confirms: true
+    #returnListener
+    publisher-returns: true
+    template:
+      mandatory: true
+      retry:
+        enabled: true
+        initial-interval: 1000
+        max-attempts: 3
+        max-interval: 10000
+        multiplier: 1.0
+    #consumer
+    listener:
+      simple:
+        acknowledge-mode: manual
+        concurrency: 10
+        max-concurrency: 20
+        auto-startup: true
+        default-requeue-rejected: true

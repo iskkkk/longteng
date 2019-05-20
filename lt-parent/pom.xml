@@ -13,6 +13,8 @@
         <module>../lt-service</module>
         <module>../lt-simpl</module>
         <module>../lt-rabbitmq</module>
+        <module>../lt-spring-exchange</module>
+        <module>../lt-boot-rabbit</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -27,6 +29,7 @@
         <mapper.version>1.0-SNAPSHOT</mapper.version>
         <service.version>1.0-SNAPSHOT</service.version>
         <simpl.version>1.0-SNAPSHOT</simpl.version>
+        <lt-boot-amqp.version>1.0-SNAPSHOT</lt-boot-amqp.version>
 
         <fastjson.version>1.2.49</fastjson.version>
         <dubbo-starter.version>1.1.1</dubbo-starter.version>
@@ -45,6 +48,11 @@
         <servlet-api.version>2.5</servlet-api.version>
         <dom4j.version>1.6.1</dom4j.version>
         <jdom.version>2.0.2</jdom.version>
+        <amqp.version>5.7.0</amqp.version>
+        <spring-rabbit.version>2.0.5.RELEASE</spring-rabbit.version>
+        <junit.version>4.12</junit.version>
+        <spring-test.version>5.0.8.RELEASE</spring-test.version>
+        <jedis.version>2.9.0</jedis.version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -152,6 +160,41 @@
                 <groupId>org.jdom</groupId>
                 <artifactId>jdom</artifactId>
                 <version>${jdom.version}</version>
+            </dependency>
+
+            <!--spring整合rabbitMQ-->
+            <dependency>
+                <groupId>com.rabbitmq</groupId>
+                <artifactId>amqp-client</artifactId>
+                <version>${amqp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.amqp</groupId>
+                <artifactId>spring-rabbit</artifactId>
+                <version>${spring-rabbit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring-test.version}</version>
+            </dependency>
+
+            <!--&lt;!&ndash;springboot整合rabbitMQ&ndash;&gt;-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-starter-amqp</artifactId>-->
+            <!--</dependency>-->
+
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
             </dependency>
 
         </dependencies>

@@ -1,5 +1,6 @@
 package com.alon.impl.webSocket;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.socket.WebSocketHandler;
@@ -11,6 +12,7 @@ import java.util.Map;
  * Created by jackiechan on 2018/3/9/下午8:14
  * 用于拦截我们的请求
  */
+@Slf4j
 public class WebSocketInterceptor extends HttpSessionHandshakeInterceptor {
     /**
       * 方法表述: 在我们的握手之前执行该方法,继续握手的话返回 true, 中断握手返回 fasle
@@ -24,7 +26,7 @@ public class WebSocketInterceptor extends HttpSessionHandshakeInterceptor {
     */
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
-        System.err.println("握手之前");
+        log.info("握手之前");
         //得知道用户传过来的名字是什么
             //按照我们预先定义好的规则,用户的名字是请求参数的最后一个参数
         String url = request.getURI().toString();//请求的地址
@@ -39,7 +41,7 @@ public class WebSocketInterceptor extends HttpSessionHandshakeInterceptor {
 
     @Override
     public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception ex) {
-        System.err.println("握手之后");
+        log.info("握手之后");
 
         super.afterHandshake(request, response, wsHandler, ex);
     }

@@ -1,6 +1,7 @@
 package com.alon.impl.webSocket;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -15,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 用于处理我们的 websocket 具体请求的类
  * 和原生的区别,这个对象是单例的,所以除了公用的数据外,不能使用成员变量
  */
+@Slf4j
 public class WebSocketHandler extends TextWebSocketHandler {
 
     private static final Map<String,WebSocketSession> allClient=new ConcurrentHashMap<String, WebSocketSession>();//用于存储所有用户连接的 map
@@ -27,7 +29,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
     */
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        System.out.println("用户建立连接了");
+        log.info("用户建立连接了");
         //通过属性找到保存的 name
         Map<String, Object> attributes = session.getAttributes();//获取我们在拦截器中保存了参数的那个 map
         String name= (String) attributes.get(Config.attrName);
