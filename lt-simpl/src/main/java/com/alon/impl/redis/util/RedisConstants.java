@@ -14,6 +14,11 @@ public class RedisConstants {
     /**
      * redis库1  保存档案树
      */
+    public static final Integer datebase0=0;
+
+    /**
+     * redis库1  保存档案树
+     */
     public static final Integer datebase1=1;
 
     /**

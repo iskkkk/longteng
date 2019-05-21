@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import redis.clients.jedis.Jedis;
 
 import java.util.List;
 import java.util.Map;
@@ -120,10 +119,14 @@ public class RedisUtil {
      * @param       indexdb
       * @return boolean true成功 false失败
     */
-    public boolean set(String key,Object value,int indexdb) {
+    public boolean set(String key,Object value,int indexdb,Long time) {
         try {
             myRedisTemplate.indexdb.set(indexdb);
-            myRedisTemplate.opsForValue().set(key, value);
+            if(time>0){
+                myRedisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+            }else{
+                myRedisTemplate.opsForValue().set(key, value);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -610,6 +613,15 @@ public class RedisUtil {
         }
     }
 
+    /**
+      * 方法表述: 根据key对象是否存在缓存中
+      * @Author 一股清风
+      * @Date 14:31 2019/5/20
+      * @param       prefix
+ * @param       key
+ * @param       clazz
+      * @return T
+    */
     public <T> T get(KeyPrefix prefix, String key, Class<T> clazz) {
             //对key增加前缀，即可用于分类，也避免key重复
             String realKey = prefix.getPrefix() + key;
@@ -634,11 +646,7 @@ public class RedisUtil {
         }
         String realKey = prefix.getPrefix() + key;
         int seconds = prefix.expireSeconds();//获取过期时间
-        if (seconds <= 0) {
-            set(realKey,str,RedisConstants.datebase2);
-        } else {
-            set(realKey,str,seconds);
-        }
+        set(realKey,str,RedisConstants.datebase2,Long.valueOf(seconds));
         return true;
     }
 
