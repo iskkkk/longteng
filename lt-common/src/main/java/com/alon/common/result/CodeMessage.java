@@ -32,6 +32,9 @@ public class CodeMessage {
     public static CodeMessage SECKILL_OVER = new CodeMessage(500500, "商品已经秒杀完毕");
     public static CodeMessage REPEATE_SECKILL = new CodeMessage(500501, "不能重复秒杀");
 
+    //请求接口
+    public static CodeMessage WX_TOKEN = new CodeMessage(400501, "请求token失败");
+
     /**
       * 方法表述: 返回带参数的错误码
       * @Author 一股清风
