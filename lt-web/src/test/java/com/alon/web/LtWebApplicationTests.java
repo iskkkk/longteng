@@ -2,6 +2,7 @@ package com.alon.web;
 
 import com.alon.amqp.model.Employee;
 import com.alon.amqp.producer.MessageProducer;
+import com.alon.impl.redis.util.RedisConstants;
 import com.alon.impl.redis.util.RedisUtil;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.Search;
@@ -69,5 +70,6 @@ public class LtWebApplicationTests {
 
     @Test
     public void testDBU() {
+        Boolean set = redisUtil.set("redis:redis1", "17666108122_1", RedisConstants.datebase2,0L);
     }
 }
