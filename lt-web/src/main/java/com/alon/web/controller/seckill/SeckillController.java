@@ -63,9 +63,9 @@ public class SeckillController implements InitializingBean {
             return  ResultData.error(CodeMessage.ACCESS_LIMIT_REACHED);
         }
 
-       /* if (user == null) {
-            return Result.error(CodeMessage.SESSION_ERROR);
-        }*/
+        if (user == null) {
+            return ResultData.error(CodeMessage.SESSION_ERROR);
+        }
 
         //内存标记，减少redis访问
         boolean over = localOverMap.get(goodsId);
