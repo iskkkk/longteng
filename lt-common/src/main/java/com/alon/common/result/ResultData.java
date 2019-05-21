@@ -13,6 +13,8 @@ public class ResultData<T> {
     private T data;
 
     public ResultData(T data) {
+        this.code = CodeMessage.SUCCESS.getCode();
+        this.msg = CodeMessage.SUCCESS.getMessage();
         this.data = data;
     }
 
