@@ -36,7 +36,7 @@ public class SeckillService {
             //下订单 写入秒杀订单
             return orderService.createOrder(user, goods);
         }else {
-            setGoodsOver(goods.id);
+            setGoodsOver(goods.goodId);
             return null;
         }
     }

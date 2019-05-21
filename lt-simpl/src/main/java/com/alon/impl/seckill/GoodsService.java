@@ -57,12 +57,12 @@ public class GoodsService {
         int numAttempts = 0;
         int ret = 0;
         SeckillGoods sg = new SeckillGoods();
-        sg.setGoodsId(goods.id);
+        sg.setGoodsId(goods.goodId);
         sg.setVersion(goods.version);
         do {
             numAttempts++;
             try {
-                sg.setVersion(goodsMapper.getVersionByGoodsId(goods.id));
+                sg.setVersion(goodsMapper.getVersionByGoodsId(goods.goodId));
                 ret = goodsMapper.reduceStockByVersion(sg);
             } catch (Exception e) {
                 e.printStackTrace();

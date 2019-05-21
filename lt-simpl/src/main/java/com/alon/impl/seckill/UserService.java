@@ -84,7 +84,7 @@ public class UserService {
     }
 
     public String login(HttpServletResponse response, LoginVo loginVo) {
-        if (loginVo == null) {
+        if (StringUtils.isEmpty(loginVo.getMobile())) {
             throw new GlobalException(CodeMessage.SERVER_ERROR);
         }
         String mobile = loginVo.getMobile();

@@ -7,6 +7,7 @@ import com.alon.mapper.dao.seckill.OrderMapper;
 import com.alon.model.seckill.LtUser;
 import com.alon.model.seckill.OrderInfo;
 import com.alon.model.seckill.SeckillOrder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,8 @@ import java.util.Date;
  * @Version 1.0
  **/
 @Service
+@Slf4j
+@Transactional(rollbackFor = RuntimeException.class)
 public class OrderService {
     @Autowired
     private OrderMapper orderMapper;
@@ -36,28 +39,32 @@ public class OrderService {
         return orderMapper.getOrderById(orderId);
     }
 
-    @Transactional
     public OrderInfo createOrder(LtUser user, GoodsVo goods) {
-        OrderInfo orderInfo = new OrderInfo();
-        orderInfo.setCreateDate(new Date());
-        orderInfo.setDeliveryAddrId(0L);
-        orderInfo.setGoodsCount(1);
-        orderInfo.setGoodsId(goods.id);
-        orderInfo.setGoodsName(goods.goodsName);
-        orderInfo.setGoodsPrice(goods.goodsPrice);
-        orderInfo.setOrderChannel(1);
-        orderInfo.setStatus(0);
-        orderInfo.setUserId(user.getId());
-        orderMapper.insert(orderInfo);
+        OrderInfo orderInfo = null;
+        SeckillOrder seckillOrder = null;
+        try {
+            orderInfo = new OrderInfo();
+            orderInfo.setCreateDate(new Date());
+            orderInfo.setDeliveryAddrId(0L);
+            orderInfo.setGoodsCount(1);
+            orderInfo.setGoodsId(goods.goodId);
+            orderInfo.setGoodsName(goods.goodsName);
+            orderInfo.setGoodsPrice(goods.goodsPrice);
+            orderInfo.setOrderChannel(1);
+            orderInfo.setStatus(0);
+            orderInfo.setUserId(user.getId());
+            orderMapper.insert(orderInfo);
 
-        SeckillOrder seckillOrder = new SeckillOrder();
-        seckillOrder.setGoodsId(goods.id);
-        seckillOrder.setOrderId(orderInfo.getId());
-        seckillOrder.setUserId(user.getId());
-        orderMapper.insertSeckillOrder(seckillOrder);
-
-        redisUtil.set(OrderKey.getSeckillOrderByUidGid, "" + user.getId() + "_" + goods.id, seckillOrder);
-
+            seckillOrder = new SeckillOrder();
+            seckillOrder.setGoodsId(goods.goodId);
+            seckillOrder.setOrderId(orderInfo.getId());
+            seckillOrder.setUserId(user.getId());
+            orderMapper.insertSeckillOrder(seckillOrder);
+            redisUtil.set(OrderKey.getSeckillOrderByUidGid, "" + user.getId() + "_" + goods.goodId, seckillOrder);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            log.error("保存订单失败：" + e.getMessage());
+        }
         return orderInfo;
     }
 }
