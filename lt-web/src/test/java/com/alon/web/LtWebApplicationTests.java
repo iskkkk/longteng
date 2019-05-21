@@ -2,6 +2,7 @@ package com.alon.web;
 
 import com.alon.amqp.model.Employee;
 import com.alon.amqp.producer.MessageProducer;
+import com.alon.impl.redis.util.RedisUtil;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
@@ -23,6 +24,9 @@ public class LtWebApplicationTests {
 
     @Autowired
     private JestClient jestClient;
+
+    @Autowired
+    private RedisUtil redisUtil;
     @Autowired
     private MessageProducer messageProducer;
 

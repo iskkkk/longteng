@@ -25,7 +25,9 @@ public interface GoodsMapper {
             " sg.seckill_price seckillPrice, sg.version from lt_goods_seckill sg left join lt_goods g on sg.goods_id = g.id")
     public List<GoodsVo> listGoodsVo();
 
-    @Select("select g.*, sg.stock_count, sg.start_date, sg.end_date, sg.seckill_price, sg.version  from lt_goods_seckill sg left join lt_goods g  on sg.goods_id = g.id where g.id = #{goodsId}")
+    @Select("select g.id goodId,g.goods_name goodsName,g.goods_title goodsTitle,g.goods_img goodsImg," +
+             "g.goods_detail goodsDetail ,g.goods_price goodsPrice,g.goods_stock goodsStock," +
+            " sg.stock_count stockCount, sg.start_date startDate, sg.end_date endDate, sg.seckill_price seckillPrice, sg.version  from lt_goods_seckill sg left join lt_goods g  on sg.goods_id = g.id where g.id = #{goodsId}")
     public GoodsVo getGoodsVoByGoodsId(@Param("goodsId") long goodsId);
 
     //stock_count > 0 和 版本号实现乐观锁 防止超卖

@@ -27,7 +27,7 @@ public class RedisController {
     @PostMapping("/set")
     public ResultData test(){
         try {
-            redisUtil.set("redisTemplate","这是一条测试数据", RedisConstants.datebase2);
+            redisUtil.set("redisTemplate","这是一条测试数据", RedisConstants.datebase2,60L);
             String value = redisUtil.get("redisTemplate",RedisConstants.datebase2).toString();
             log.info("redisValue="+value);
             log.info("读取redis成功");
