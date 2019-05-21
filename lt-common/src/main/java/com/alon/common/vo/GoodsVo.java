@@ -17,6 +17,7 @@ public class GoodsVo {
     public Integer version;
 
     public Long id;
+    public Long goodId;
     public String goodsName;
     public String goodsTitle;
     public String goodsImg;
