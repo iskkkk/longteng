@@ -20,11 +20,11 @@ public class WxTokenUtil {
       * 方法表述: 获取access_token
       * @Author 一股清风
       * @Date 14:05 2019/5/21
-      * @param       appid
-     * @param       appsecret
       * @return com.alon.common.result.ResultData
     */
-    public static ResultData<TokenVo> getAccessToken(String appid, String appsecret){
+    public static ResultData<TokenVo> getAccessToken(){
+        String appid = "wx0bb8cf1c2d8693d6";
+        String appsecret = "2f087b1dc47b625c3b2ecf5eb01f13eb";
         TokenVo redisVo = new TokenVo();
         String url = WxUrlConstant.TOKEN_URL + "token?";
         Map<String,Object> map = new TreeMap<>();
@@ -34,7 +34,7 @@ public class WxTokenUtil {
         map = HttpClientUtils.doGet(url,map);
         redisVo.token = (String) map.get("access_token");
         redisVo.expiresIn = (Integer) map.get("expires_in");
-        redisVo.errcode = (String) map.get("errcode");
+        redisVo.errcode = (Integer) map.get("errcode");
         redisVo.errmsg = (String) map.get("errmsg");
         return ResultData.success(redisVo);
     }

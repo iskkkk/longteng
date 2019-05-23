@@ -53,6 +53,7 @@
         <junit.version>4.12</junit.version>
         <spring-test.version>5.0.8.RELEASE</spring-test.version>
         <jedis.version>2.9.0</jedis.version>
+        <common-beanutils.version>1.8.3</common-beanutils.version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -195,6 +196,12 @@
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
                 <version>${jedis.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils-core</artifactId>
+                <version>${common-beanutils.version}</version>
             </dependency>
 
         </dependencies>

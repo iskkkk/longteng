@@ -8,6 +8,8 @@ package com.alon.common.constant;
  * @Version 1.0
  **/
 public class WxUrlConstant {
-    // 获取access_token的接口地址（GET） 限200（次/天）
+
     public static final String TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/";
+    public static final String UNIONID_URL = "https://api.weixin.qq.com/cgi-bin/user/info?";
+    public static final String USER_GRANT_URL = "https://api.weixin.qq.com/sns/oauth2/";
 }
