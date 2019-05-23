@@ -25,10 +25,10 @@ public class WxTokenServerImpl implements WxTokenService {
     private RedisUtil redisUtil;
 
     @Override
-    public ResultData getAccessToken(String appid, String appsecret) {
+    public ResultData getAccessToken() {
         String token1 = (String) redisUtil.get("access_token", RedisConstants.datebase2);
         if (StringUtils.isBlank(token1)) {
-            ResultData token = WxTokenUtil.getAccessToken(appid, appsecret);
+            ResultData token = WxTokenUtil.getAccessToken();
             TokenVo tokenVo = (TokenVo) token.getData();
             if (null != tokenVo.token) {
                 token1 = tokenVo.token;
