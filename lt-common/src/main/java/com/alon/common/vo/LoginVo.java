@@ -1,8 +1,8 @@
 package com.alon.common.vo;
 
 import com.alon.common.validator.IsMobile;
-import com.sun.istack.internal.NotNull;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
