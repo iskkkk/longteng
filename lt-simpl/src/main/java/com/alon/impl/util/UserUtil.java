@@ -2,14 +2,12 @@ package com.alon.impl.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alon.common.utils.DBUtil;
 import com.alon.common.utils.MD5Util;
 import com.alon.model.seckill.LtUser;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -39,9 +37,8 @@ public class UserUtil {
         }
         System.out.println("create user");
 //		//插入数据库
-        Connection conn = DBUtil.getConn();
         String sql = "insert into sk_user(login_count, nickname, register_date, salt, password, id)values(?,?,?,?,?,?)";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
+        PreparedStatement pstmt = null;
         for(int i=0;i<users.size();i++) {
             LtUser user = users.get(i);
             pstmt.setInt(1, user.getLoginCount());
@@ -54,7 +51,6 @@ public class UserUtil {
         }
         pstmt.executeBatch();
         pstmt.close();
-        conn.close();
         System.out.println("insert to db");
         //登录，生成token
         String urlString = "http://localhost:8080/login/do_login";
