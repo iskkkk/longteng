@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alon.mapper.dao.seckill.LtUserMapper">
+
+    <resultMap id="BaseResultMap" type="com.alon.model.seckill.LtUser">
+        <id property="id" column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+        <result property="userName" column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="password" column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="salt" column="salt" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="head" column="head" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="registerDate" column="register_date" jdbcType="DATE" javaType="java.util.Date" />
+        <result property="lastLoginDate" column="last_login_date" jdbcType="DATE" javaType="java.util.Date" />
+        <result property="loginCount" column="login_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="six" column="six" jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="birthday" column="birthday" jdbcType="DATE" javaType="java.util.Date" />
+        <result property="isMember" column="is_member" jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="createTime" column="create_time" jdbcType="DATE" javaType="java.util.Date" />
+        <result property="updateTime" column="update_time" jdbcType="DATE" javaType="java.util.Date" />
+        <result property="status" column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="updateVersion" column="update_version" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </resultMap>
+
+    <select id="getByUserName" resultMap="BaseResultMap">
+        select * from lt_user where user_name = #{userName}
+    </select>
+
+    <insert id="insert" parameterType="com.alon.common.dto.sys.LoginDto">
+        insert into lt_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="userName != null" >
+                user_name,
+            </if>
+            <if test="password != null" >
+                password,
+            </if>
+            <if test="salt != null" >
+                salt,
+            </if>
+            <if test="head != null" >
+                head,
+            </if>
+            <if test="registerDate != null" >
+                register_date,
+            </if>
+            <if test="lastLoginDate != null" >
+                last_login_date,
+            </if>
+            <if test="loginCount != null" >
+                login_count,
+            </if>
+            <if test="birthday != null" >
+                birthday,
+            </if>
+            <if test="isMember != null" >
+                is_member,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="updateTime != null" >
+                update_time,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="updateVersion != null" >
+                update_version,
+            </if>
+            <if test="six != null" >
+                six,
+            </if>
+            <if test="unionId != null" >
+                union_id,
+            </if>
+            <if test="phone != null" >
+                phone,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null" >
+                #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="head != null" >
+                #{head,jdbcType=VARCHAR},
+            </if>
+            <if test="registerDate != null" >
+                #{registerDate,jdbcType=DATE},
+            </if>
+            <if test="lastLoginDate != null" >
+                #{lastLoginDate,jdbcType=DATE},
+            </if>
+            <if test="loginCount != null" >
+                #{loginCount,jdbcType=Integer},
+            </if>
+            <if test="birthday != null" >
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="isMember != null" >
+                #{isMember,jdbcType=Integer},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=DATE},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=DATE},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="updateVersion != null" >
+                #{updateVersion,jdbcType=BIGINT},
+            </if>
+            <if test="six != null" >
+                #{six,jdbcType=INTEGER},
+            </if>
+            <if test="unionId != null" >
+                #{unionId,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+                #{phone,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

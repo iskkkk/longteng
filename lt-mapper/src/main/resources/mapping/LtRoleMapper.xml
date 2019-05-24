@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.alon.mapper.dao.LtRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.alon.model.LtRole">
+      <id property="id" column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <result property="name" column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <result property="memo" column="memo" jdbcType="VARCHAR" javaType="java.lang.String" />
+  </resultMap>
+
+
+  <select id="findByUserName"  parameterType="java.lang.Long"  resultMap="BaseResultMap">
+    select r.id,r.name,r.memo from lt_role r
+    left join lt_user_role ur on(r.id = ur.rid)
+    left join lt_user u on(u.id = ur.user_id)
+    where u.id = #{userId}
+  </select>
+
+</mapper>
