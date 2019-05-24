@@ -15,6 +15,7 @@
         <module>../lt-rabbitmq</module>
         <module>../lt-spring-exchange</module>
         <module>../lt-boot-rabbit</module>
+        <module>../lt-shiro</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -30,6 +31,7 @@
         <service.version>1.0-SNAPSHOT</service.version>
         <simpl.version>1.0-SNAPSHOT</simpl.version>
         <lt-boot-amqp.version>1.0-SNAPSHOT</lt-boot-amqp.version>
+        <lt-shiro.version.version>1.0-SNAPSHOT</lt-shiro.version.version>
 
         <fastjson.version>1.2.49</fastjson.version>
         <dubbo-starter.version>1.1.1</dubbo-starter.version>
@@ -54,6 +56,9 @@
         <spring-test.version>5.0.8.RELEASE</spring-test.version>
         <jedis.version>2.9.0</jedis.version>
         <common-beanutils.version>1.8.3</common-beanutils.version>
+        <shiro.version>1.4.0</shiro.version>
+        <shiro-redis.version>2.4.2.1-RELEASE</shiro-redis.version>
+        <ehcache.version>1.3.2</ehcache.version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -203,7 +208,23 @@
                 <artifactId>commons-beanutils-core</artifactId>
                 <version>${common-beanutils.version}</version>
             </dependency>
-
+            <!--shiro所需jar包-->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.crazycake</groupId>
+                <artifactId>shiro-redis</artifactId>
+                <version>${shiro-redis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-ehcache</artifactId>
+                <version>${ehcache.version}</version>
+            </dependency>
+            <!--============================-->
         </dependencies>
     </dependencyManagement>
 

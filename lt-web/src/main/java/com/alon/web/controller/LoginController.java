@@ -1,12 +1,18 @@
 package com.alon.web.controller;
 
+import com.alon.common.dto.sys.LoginDto;
 import com.alon.common.result.CodeMessage;
 import com.alon.common.result.ResultData;
 import com.alon.common.vo.LoginVo;
 import com.alon.impl.redis.util.RedisUtil;
 import com.alon.impl.seckill.UserService;
+import com.alon.service.sys.LtUserService;
 import com.alon.service.third.wx.WxInfoService;
+import com.alon.common.utils.ShiroUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +41,9 @@ public class LoginController {
 
     @Autowired
     private RedisUtil redisUtil;
+
+    @Autowired
+    private LtUserService ltUserService;
 
     @PostMapping("/do_login")
     public ResultData login(HttpServletResponse response, @Valid @RequestBody LoginVo loginVo) {
@@ -67,5 +76,39 @@ public class LoginController {
             return ResultData.error(CodeMessage.WX_TOKEN);
         }
         return ResultData.success("授权成功");
+    }
+
+    @PostMapping("/auth_login")
+    public ResultData checkLogin(@RequestBody LoginDto dto){
+        if(null == dto.rememberMe){
+            dto.rememberMe = false;
+        }
+        if (StringUtils.isBlank(dto.userName)) {
+            return ResultData.error(CodeMessage.NONE_USER);
+        }
+        // 获取Subject对象
+        Subject subject = ShiroUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(dto.userName, dto.password,dto.rememberMe);
+        try{
+            subject.login(token);
+            return ResultData.success("登陆成功！");
+        }catch (UnknownAccountException e) {
+            return ResultData.error(CodeMessage.NONE_USER);
+        } catch (IncorrectCredentialsException e) {
+            return ResultData.error(CodeMessage.ERROR_PASS);
+        } catch (LockedAccountException e) {
+            return ResultData.error(CodeMessage.LOCKING);
+        } catch (AuthenticationException e) {
+            return ResultData.error(CodeMessage.AUTH_FAILED);
+        }
+    }
+
+    @PostMapping("/doRegister")
+    public ResultData doRegister(@RequestBody LoginDto dto) {
+        boolean result = ltUserService.registerData(dto);
+        if(result){
+            return ResultData.success("注册成功");
+        }
+        return ResultData.error(CodeMessage.BIND_ERROR);
     }
 }

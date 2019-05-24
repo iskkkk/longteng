@@ -40,8 +40,8 @@
 
         <dependency>
             <groupId>com.alon</groupId>
-            <artifactId>lt-boot-rabbit</artifactId>
-            <version>${lt-boot-amqp.version}</version>
+            <artifactId>lt-shiro</artifactId>
+            <version>${lt-shiro.version.version}</version>
         </dependency>
 
     </dependencies>

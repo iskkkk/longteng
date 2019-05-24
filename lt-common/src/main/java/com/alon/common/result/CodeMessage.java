@@ -24,6 +24,10 @@ public class CodeMessage {
     public static CodeMessage MOBILE_NOT_EXIST = new CodeMessage(500214, "手机号不存在");
     public static CodeMessage PASSWORD_ERROR = new CodeMessage(500215, "密码错误");
     public static CodeMessage PRIMARY_ERROR = new CodeMessage(500216, "主键冲突");
+    public static CodeMessage NONE_USER = new CodeMessage(500217, "账号不存在");
+    public static CodeMessage ERROR_PASS = new CodeMessage(500218, "密码不正确");
+    public static CodeMessage LOCKING = new CodeMessage(500219, "帐号已被锁定");
+    public static CodeMessage AUTH_FAILED = new CodeMessage(500220, "认证失败");
 
     //订单模块 5004XX
     public static CodeMessage ORDER_NOT_EXIST = new CodeMessage(500400, "订单不存在");

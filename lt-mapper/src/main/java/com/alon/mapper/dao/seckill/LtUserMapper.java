@@ -1,5 +1,6 @@
 package com.alon.mapper.dao.seckill;
 
+import com.alon.common.dto.sys.LoginDto;
 import com.alon.model.seckill.LtUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -21,4 +22,10 @@ public interface LtUserMapper {
 
     @Update("update lt_user set password = #{password} where id = #{id}")
     void update(LtUser toBeUpdate);
+
+    LtUser getByUserName(String userName);
+
+    void insert(LoginDto dto);
+
+
 }

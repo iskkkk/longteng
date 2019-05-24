@@ -29,7 +29,7 @@ public class UserUtil {
             LtUser user = new LtUser();
             user.setId(13000000000L+i);
             user.setLoginCount(1);
-            user.setNickname("user"+i);
+            user.setUserName("user"+i);
             user.setRegisterDate(new Date());
             user.setSalt("1a2b3c");
             user.setPassword(MD5Util.inputPassToDbPass("123456", user.getSalt()));
@@ -42,7 +42,7 @@ public class UserUtil {
         for(int i=0;i<users.size();i++) {
             LtUser user = users.get(i);
             pstmt.setInt(1, user.getLoginCount());
-            pstmt.setString(2, user.getNickname());
+            pstmt.setString(2, user.getUserName());
             pstmt.setTimestamp(3, new Timestamp(user.getRegisterDate().getTime()));
             pstmt.setString(4, user.getSalt());
             pstmt.setString(5, user.getPassword());
