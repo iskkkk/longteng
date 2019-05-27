@@ -23,8 +23,8 @@ public class WxTokenUtil {
       * @return com.alon.common.result.ResultData
     */
     public static ResultData<TokenVo> getAccessToken(){
-        String appid = "wx0bb8cf1c2d8693d6";
-        String appsecret = "2f087b1dc47b625c3b2ecf5eb01f13eb";
+        String appid = "";
+        String appsecret = "";
         TokenVo redisVo = new TokenVo();
         String url = WxUrlConstant.TOKEN_URL + "token?";
         Map<String,Object> map = new TreeMap<>();
