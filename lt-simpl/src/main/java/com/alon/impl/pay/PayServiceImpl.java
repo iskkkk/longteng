@@ -1,5 +1,6 @@
 package com.alon.impl.pay;
 
+import com.alon.common.constant.WxUrlConstant;
 import com.alon.common.dto.pay.WxPayForm;
 import com.alon.common.utils.*;
 import com.alon.impl.webSocket.WebSocketHandler;
@@ -26,7 +27,7 @@ import java.util.TreeMap;
 @Slf4j
 @Service
 public class PayServiceImpl implements PayService {
-    protected final static String UNIFIEDORDER = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+
     @Override
     public String wxScanPay(WxPayForm payForm) {
         String nonceStr = NumberUtil.getRandomString(6);
@@ -37,7 +38,7 @@ public class PayServiceImpl implements PayService {
         // 获取发起电脑 ip
         String spbillCreateIp = "192.168.1.8";
         // 回调接口
-        String notifyUrl = "http://dongdong.vicp.net/api/pay/payNotify";
+        String notifyUrl = "http://aloning.imwork.net/pay/notify";
         String tradeType = "NATIVE";
 
         Map<String, String> payParams = new HashMap<String, String>();
@@ -50,11 +51,15 @@ public class PayServiceImpl implements PayService {
         payParams.put("spbill_create_ip", spbillCreateIp);
         payParams.put("notify_url", notifyUrl);
         payParams.put("trade_type", tradeType);
+//        payParams.put("product_id", "12235413214070356458058");//trade_type=NATIVE时，此参数必传。此参数为二维码中包含的商品ID，商户自行定义。
+        payParams.put("limit_pay", "no_credit");//上传此参数no_credit--可限制用户不能使用信用卡支付
+//        payParams.put("openid", "onhAr1eEQ8QUJroJ3fiIgixLPW24");//trade_type=JSAPI时（即JSAPI支付），此参数必传，此参数为微信用户在商户对应appid下的唯一标识。
+        payParams.put("receipt", "N");//Y，传入Y时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效
         String sign = SignUtils.sign(payForm.key,payParams);
         payParams.put("sign",sign);
         String xml = XmlUtils.toXml(payParams, true);
         log.info("請求參數：" + xml);
-        String resXml = HttpClientUtils.post(UNIFIEDORDER, xml);
+        String resXml = HttpClientUtils.post(WxUrlConstant.UNIFIEDORDER, xml);
 
         Map map = XmlUtils.doXMLParse(resXml);
         log.info("响应参数：" + resXml);
