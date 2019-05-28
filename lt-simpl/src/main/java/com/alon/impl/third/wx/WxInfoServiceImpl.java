@@ -42,7 +42,8 @@ public class WxInfoServiceImpl implements WxInfoService {
         WxUserInfo userInfo = null;
         ResultData data = UserBaseInfoUtil.getUserInfo(code);
         WxUserBaseInfoVo infoVo = (WxUserBaseInfoVo) data.getData();
-        infoVo = WxTokenUtil.getMoreInfo(infoVo.accessToken,infoVo.openid);
+        String token = (String) tokenService.getAccessToken().getData();
+        infoVo = WxTokenUtil.getMoreInfo(token,infoVo.openid);
         if (StringUtils.isNotBlank(infoVo.openid)) {
             userInfo = new WxUserInfo();
             BeanUtils.copyProperties(infoVo,userInfo);

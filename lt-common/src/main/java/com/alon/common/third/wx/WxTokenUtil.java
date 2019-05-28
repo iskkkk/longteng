@@ -62,12 +62,14 @@ public class WxTokenUtil {
         map.put("next_openid",nextOpenId);
         map = HttpClientUtils.doGet(url,map);
         WxFansList fansList = new WxFansList();
-        fansList.total = (Integer) map.get("total");
-        fansList.count = (Integer) map.get("count");
-        fansList.data = (List) ((Map) map.get("data")).get("openid");
-        fansList.nextOpenid = (String) map.get("next_openid");
         fansList.errcode = (Integer) map.get("errcode");
         fansList.errmsg = (String) map.get("errmsg");
+        if (null == fansList.errcode) {
+            fansList.total = (Integer) map.get("total");
+            fansList.count = (Integer) map.get("count");
+            fansList.data = (List) ((Map) map.get("data")).get("openid");
+            fansList.nextOpenid = (String) map.get("next_openid");
+        }
         return fansList;
     }
 
