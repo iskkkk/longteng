@@ -8,5 +8,7 @@ lt-service  依赖mapper模块
 lt-simpl    依赖service模块，整合elasticsearch，使用jest连接es集群，并实现mysql数据表数据同步到es中
 整合redis    
 lt-boot-rebbit 依赖simpl模块整合amqp
+lt-shiro 依赖lt-boot-rebbit模块整合shiro 
 lt-web     依赖rebbit模板，（这里就不需要引用model,mapper，service,common了，因为已经间接引用了）  
 
+实现微信扫码，公众号支付功能
