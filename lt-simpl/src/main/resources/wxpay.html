@@ -1,0 +1,71 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="http://g.alicdn.com/sj/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script type="text/javascript">
+    function toPay(){
+        if (typeof WeixinJSBridge == "undefined"){
+           if( document.addEventListener ){
+               document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+           }else if (document.attachEvent){
+               document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+               document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+           }
+        }else{
+           onBridgeReady();
+        }
+    }
+    function onBridgeReady(){
+    	$.ajax({
+    		   type: "POST",
+    		   url: "http://aloning.imwork.net/pay/wx_pay",
+    		   success: function(rest){
+                 rest = rest.data;
+                 WeixinJSBridge.invoke(
+                           'getBrandWCPayRequest', {
+                               "appId" : rest.appId,
+                               "timeStamp": rest.timeStamp,
+                               "nonceStr" : rest.nonceStr,
+                               "package" : rest.payPackage,
+                               "signType" :  rest.signType,
+                               "paySign" : rest.paySign
+                           },function(res){
+                            if(res.err_msg == "get_brand_wcpay_request:ok"){
+                                location.href = rest.callbackUrl;
+                            //	location.href="weixinPayResult.html";//支付成功跳转到指定页面
+                            }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+                                $("#resId").html("支付取消");
+                            }else{
+                                $("#resId").html("支付失败");
+                            }
+                        });
+               }
+    		});
+    }
+    </script>
+</head>
+<body>
+ 
+ 
+<div class="content">
+    <div class="form-area" style="font-size: 20px;">
+    	 <div class="inp">
+            		支付0.01元
+        </div>
+        <button style="width: 100px;height: 50px;font-size: 20px;" class="em-submit-st2" onclick="toPay()" >
+           	确定支付
+        </button>
+    </div>
+   结果：
+    <p/>
+    <div id="resId"></div>
+    参数：
+    <p/>
+    <div id="invokeId"></div>
+    <br/><p/>
+    返回：
+    <p/>
+    <div id="msgId"></div>
+</div>
+</body>
+</html>
