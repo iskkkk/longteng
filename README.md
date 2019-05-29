@@ -11,4 +11,4 @@ lt-boot-rebbit 依赖simpl模块整合amqp
 lt-shiro 依赖lt-boot-rebbit模块整合shiro 
 lt-web     依赖rebbit模板，（这里就不需要引用model,mapper，service,common了，因为已经间接引用了）  
 
-实现微信扫码，公众号支付功能
+实现elasticsearch,amqp,redis缓存，websocket,微信扫码支付和登陆，获取用户信息，公众号支付等功能
