@@ -2,8 +2,10 @@ package com.alon.common.utils;
 
 import com.alon.common.constant.DateFormatterConstant;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -56,6 +58,19 @@ public class DateFormUtils {
         Instant instant = localDateTime.atZone(zone).toInstant();
         Date date = Date.from(instant);
         return date;
+    }
+
+    /**
+      * 方法表述: 获取当前时间戳
+      * @Author 一股清风
+      * @Date 10:28 2019/5/29
+      * @param       
+      * @return java.lang.String
+    */
+    public static String getNowTime() {
+        LocalDate localDate = LocalDate.now();
+        Timestamp timestamp= Timestamp.valueOf(LocalDateTime.now());
+        return String.valueOf(timestamp.getTime()/1000);
     }
 
     public static void main(String[] args) {
