@@ -1,6 +1,7 @@
 package com.alon.web.controller;
 
 import com.alon.common.dto.pay.WxPayForm;
+import com.alon.common.result.CodeMessage;
 import com.alon.common.result.ResultData;
 import com.alon.service.pay.PayService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,14 +30,25 @@ public class PayController {
     @Autowired
     private PayService payService;
 
+    /**
+      * 方法表述: 微信授权支付(JSAPI)
+      * @Author 一股清风
+      * @Date 10:15 2019/5/29
+      * @param
+      * @return com.alon.common.result.ResultData
+    */
     @PostMapping("/wx_pay")
     public ResultData wxPay() {
         WxPayForm payForm = new WxPayForm();
         payForm.appId = "";
         payForm.mchId = "";
         payForm.key = "";
-        String s = payService.wxScanPay(payForm);
-        return  ResultData.success(s);
+        payForm.tradeType = "JSAPI";
+        ResultData s = payService.wxPay(payForm);
+        if (s.getCode() != 0) {
+            ResultData.error(new CodeMessage(s.getCode(),s.getMsg()));
+        }
+        return  ResultData.success(s.getData());
     }
 
     @GetMapping("/notify")

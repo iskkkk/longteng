@@ -17,4 +17,8 @@ public class WxUrlConstant {
     //统一下单
     public static final String UNIFIEDORDER = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
+    public static final String NATIVE = "NATIVE";
+    public static final String JSPAY = "JSAPI";
+    public static final String SUCCESS = "SUCCESS";
+
 }

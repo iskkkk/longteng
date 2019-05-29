@@ -2,10 +2,14 @@ package com.alon.impl.pay;
 
 import com.alon.common.constant.WxUrlConstant;
 import com.alon.common.dto.pay.WxPayForm;
+import com.alon.common.result.CodeMessage;
+import com.alon.common.result.ResultData;
 import com.alon.common.utils.*;
+import com.alon.common.vo.wx.WxPayParamVo;
 import com.alon.impl.webSocket.WebSocketHandler;
 import com.alon.service.pay.PayService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,42 +33,78 @@ import java.util.TreeMap;
 public class PayServiceImpl implements PayService {
 
     @Override
-    public String wxScanPay(WxPayForm payForm) {
-        String nonceStr = NumberUtil.getRandomString(6);
+    public ResultData wxPay(WxPayForm payForm) {
 
         BigDecimal orderFee = BigDecimal.valueOf(1); // 价格 单位是元
-        String body = "Alon扫码支付";   // 商品名称
         String outTradeNo = OrderNoUtils.getOrderNo(); // 订单流水号和系统的订单号不是一个
-        // 获取发起电脑 ip
-        String spbillCreateIp = "192.168.1.8";
-        // 回调接口
-        String notifyUrl = "http://aloning.imwork.net/pay/notify";
-        String tradeType = "NATIVE";
 
         Map<String, String> payParams = new HashMap<String, String>();
         payParams.put("appid", payForm.appId);
         payParams.put("mch_id", payForm.mchId);
-        payParams.put("nonce_str", nonceStr);
-        payParams.put("body", body);
+        payParams.put("nonce_str", payForm.nonceStr);
+        payParams.put("body", payForm.body);
         payParams.put("out_trade_no", outTradeNo);
         payParams.put("total_fee", String.valueOf(orderFee));
-        payParams.put("spbill_create_ip", spbillCreateIp);
-        payParams.put("notify_url", notifyUrl);
-        payParams.put("trade_type", tradeType);
-//        payParams.put("product_id", "12235413214070356458058");//trade_type=NATIVE时，此参数必传。此参数为二维码中包含的商品ID，商户自行定义。
-        payParams.put("limit_pay", "no_credit");//上传此参数no_credit--可限制用户不能使用信用卡支付
-//        payParams.put("openid", "onhAr1eEQ8QUJroJ3fiIgixLPW24");//trade_type=JSAPI时（即JSAPI支付），此参数必传，此参数为微信用户在商户对应appid下的唯一标识。
-        payParams.put("receipt", "N");//Y，传入Y时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效
+        payParams.put("spbill_create_ip", payForm.spbillCreateIp);
+        payParams.put("notify_url", payForm.notifyUrl);
+        payParams.put("trade_type", payForm.tradeType);
+        if (payForm.tradeType.equals(WxUrlConstant.NATIVE)) {
+            //trade_type=NATIVE时，此参数必传。此参数为二维码中包含的商品ID，商户自行定义。
+            payParams.put("product_id", payForm.productId);
+        }
+        if (StringUtils.isNotBlank(payForm.limitPay)) {
+            payParams.put("limit_pay", payForm.limitPay);
+        }
+        if (payForm.tradeType.equals(WxUrlConstant.JSPAY)) {
+            //trade_type=JSAPI时（即JSAPI支付），此参数必传，此参数为微信用户在商户对应appid下的唯一标识。
+            payParams.put("openid", payForm.openId);
+        }
+        payParams.put("receipt", payForm.receipt);
         String sign = SignUtils.sign(payForm.key,payParams);
         payParams.put("sign",sign);
+
         String xml = XmlUtils.toXml(payParams, true);
         log.info("請求參數：" + xml);
-        String resXml = HttpClientUtils.post(WxUrlConstant.UNIFIEDORDER, xml);
 
+        String resXml = HttpClientUtils.post(WxUrlConstant.UNIFIEDORDER, xml);
         Map map = XmlUtils.doXMLParse(resXml);
         log.info("响应参数：" + resXml);
-        String urlCode = (String) map.get("code_url");
-        return urlCode;
+        return checkPayType(map,payForm);
+    }
+    /**
+      * 方法表述: 根据支付类型返回参数
+      * @Author 一股清风
+      * @Date 14:03 2019/5/29
+      * @param       map
+     * @param       payForm
+      * @return com.alon.common.result.ResultData
+    */
+    public static ResultData checkPayType(Map map,WxPayForm payForm) {
+        String isSuccess = (String) map.get("return_code");
+        if (isSuccess.equals(WxUrlConstant.SUCCESS)) {
+            if (payForm.tradeType.equals(WxUrlConstant.JSPAY)) {
+                WxPayParamVo payInfo = new WxPayParamVo();
+                Map<String, String> paySignMap = new HashMap<String, String>();
+                payInfo.appId = (String) map.get("appid");
+                paySignMap.put("appId",payInfo.appId);
+                paySignMap.put("timeStamp",payInfo.timeStamp);
+                payInfo.nonceStr = (String) map.get("nonce_str");
+                paySignMap.put("nonceStr",payInfo.nonceStr);
+                payInfo.payPackage = "prepay_id=".concat((String) map.get("prepay_id"));
+                paySignMap.put("package",payInfo.payPackage);
+                paySignMap.put("signType",payInfo.signType);
+                String paySign = SignUtils.sign(payForm.key,paySignMap);
+                payInfo.paySign = paySign;
+                return ResultData.success(payInfo);
+            } else {
+                String urlCode = (String) map.get("code_url");
+                return ResultData.success(urlCode);
+            }
+        } else {
+            String errorCode = (String) map.get("err_code");
+            String errCodeDes = (String) map.get("err_code_des");
+            return ResultData.error(new CodeMessage(errorCode,errCodeDes));
+        }
     }
 
     /**

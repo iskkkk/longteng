@@ -88,6 +88,7 @@ public class ShiroConfig {
         filterMap.put("/login/**", "anon");
         filterMap.put("/pay/**", "anon");
         filterMap.put("/MP_verify_1qC3Vg8lmyHBTMBT.txt", "anon");
+        filterMap.put("/wxpay.html", "anon");
         filterMap.put("/druid/**","anon");
         filterMap.put("/", "anon");
         filterMap.put("/**", "user");

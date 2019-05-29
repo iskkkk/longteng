@@ -16,5 +16,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/MP_verify_1qC3Vg8lmyHBTMBT.txt").addResourceLocations("classpath:/MP_verify_1qC3Vg8lmyHBTMBT.txt");
+        registry.addResourceHandler("/wxpay.html").addResourceLocations("classpath:/wxpay.html");
     }
 }
