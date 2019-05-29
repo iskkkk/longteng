@@ -38,5 +38,5 @@ public class WxPayParamVo {
     /**
      * 支付成功跳转页面
      */
-    public String callbackUrl = "https://www.google.com.hk/";
+    public String callbackUrl;
 }

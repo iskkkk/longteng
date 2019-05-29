@@ -49,4 +49,8 @@ public class WxPayForm {
     public String body = "123test";
     public String orderNo;
     public String nonceStr = NumberUtil.getRandomString(6);
+    /**
+     * 支付成功跳转页面
+     */
+    public String callbackUrl;
 }

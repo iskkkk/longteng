@@ -6,7 +6,6 @@ import com.alon.common.result.ResultData;
 import com.alon.service.pay.PayService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +42,7 @@ public class PayController {
         payForm.appId = "";
         payForm.mchId = "";
         payForm.key = "";
+        payForm.callbackUrl = "www.baidu.com";
         payForm.tradeType = "JSAPI";
         ResultData s = payService.wxPay(payForm);
         if (s.getCode() != 0) {
@@ -51,7 +51,7 @@ public class PayController {
         return  ResultData.success(s.getData());
     }
 
-    @GetMapping("/notify")
+    @PostMapping("/notify")
     public void payNotify(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> map = payService.payNotify(request, response);
         log.info("===============" + map);

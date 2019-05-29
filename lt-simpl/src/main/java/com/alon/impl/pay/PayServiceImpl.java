@@ -95,6 +95,7 @@ public class PayServiceImpl implements PayService {
                 paySignMap.put("signType",payInfo.signType);
                 String paySign = SignUtils.sign(payForm.key,paySignMap);
                 payInfo.paySign = paySign;
+                payInfo.callbackUrl = payForm.callbackUrl;
                 return ResultData.success(payInfo);
             } else {
                 String urlCode = (String) map.get("code_url");
@@ -102,7 +103,7 @@ public class PayServiceImpl implements PayService {
             }
         } else {
             String errorCode = (String) map.get("err_code");
-            String errCodeDes = (String) map.get("err_code_des");
+            String errCodeDes = (String) map.get("return_msg");
             return ResultData.error(new CodeMessage(errorCode,errCodeDes));
         }
     }
@@ -167,8 +168,7 @@ public class PayServiceImpl implements PayService {
             packageParams.put(parameter, v);
         }
         // 账号信息
-        WxPayForm payForm = new WxPayForm();
-        String key = payForm.key; // key
+        String key = ""; // key
         log.info("解析结果：" + packageParams);
         //判断签名是否正确
         if(SignUtils.isTenpaySign("UTF-8", packageParams,key)) {
@@ -205,7 +205,7 @@ public class PayServiceImpl implements PayService {
             }
             //------------------------------
             //处理业务完毕
-            //------------------------------
+            //------------------------------通知签名验证失败
             BufferedOutputStream out = null;
             try {
                 out = new BufferedOutputStream(
