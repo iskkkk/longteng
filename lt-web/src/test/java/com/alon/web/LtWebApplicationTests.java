@@ -2,6 +2,7 @@ package com.alon.web;
 
 import com.alon.amqp.model.Employee;
 import com.alon.amqp.producer.MessageProducer;
+import com.alon.common.template.SendOrderPaySuccessMsg;
 import com.alon.common.third.wx.WxTokenUtil;
 import com.alon.common.vo.wx.WxFansList;
 import com.alon.common.vo.wx.WxUserBaseInfoVo;
@@ -85,5 +86,11 @@ public class LtWebApplicationTests {
             baseInfoVos.add(WxTokenUtil.getMoreInfo(token, i.toString()));
         });
         redisUtil.set("userInfo",baseInfoVos, RedisConstants.datebase2,0L);
+    }
+
+    @Test
+    public void sendMessage() {
+        String token = (String) tokenService.getAccessToken().getData();
+        SendOrderPaySuccessMsg.sendMessage(token,"onhAr1eEQ8QUJroJ3fiIgixLPW24");
     }
 }
