@@ -173,10 +173,9 @@ public class PayServiceImpl implements PayService {
             packageParams.put(parameter, v);
         }
         // 账号信息
-        String key = "TZnI72pLwQjAqaf1Bnw2izrTZRPDElSf"; // key
         log.info("解析结果：" + packageParams);
         //判断签名是否正确
-        if(SignUtils.isTenpaySign("UTF-8", packageParams,key)) {
+        if(SignUtils.isTenpaySign("UTF-8", packageParams,params.key)) {
             //------------------------------
             //处理业务开始
             //------------------------------

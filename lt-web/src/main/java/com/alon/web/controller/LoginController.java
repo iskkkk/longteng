@@ -1,5 +1,6 @@
 package com.alon.web.controller;
 
+import com.alon.common.config.LtConfigParams;
 import com.alon.common.dto.sys.LoginDto;
 import com.alon.common.result.CodeMessage;
 import com.alon.common.result.ResultData;
@@ -45,6 +46,9 @@ public class LoginController {
     @Autowired
     private LtUserService ltUserService;
 
+    @Autowired
+    private LtConfigParams params;
+
     @PostMapping("/do_login")
     public ResultData login(HttpServletResponse response, @Valid @RequestBody LoginVo loginVo) {
         log.info(loginVo.toString());
@@ -57,7 +61,7 @@ public class LoginController {
         //获取返回的回调地址
         String reutrnURl="http://aloning.imwork.net/login/callBack";
         //第一步：用户同意授权，获取code
-        String url="https://open.weixin.qq.com/connect/oauth2/authorize?appid=".concat("wx0bb8cf1c2d8693d6")
+        String url="https://open.weixin.qq.com/connect/oauth2/authorize?appid=".concat(params.appId)
                 + "&redirect_uri=".concat( URLEncoder.encode(reutrnURl))
                 + "&response_type=code"
                 + "&scope=snsapi_userinfo"
