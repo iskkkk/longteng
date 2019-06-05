@@ -2,11 +2,6 @@ package com.alon.web;
 
 import com.alon.amqp.model.Employee;
 import com.alon.amqp.producer.MessageProducer;
-import com.alon.common.template.SendOrderPaySuccessMsg;
-import com.alon.common.third.wx.WxTokenUtil;
-import com.alon.common.vo.wx.WxFansList;
-import com.alon.common.vo.wx.WxUserBaseInfoVo;
-import com.alon.impl.redis.util.RedisConstants;
 import com.alon.impl.redis.util.RedisUtil;
 import com.alon.service.third.wx.WxTokenService;
 import io.searchbox.client.JestClient;
@@ -20,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -78,19 +72,19 @@ public class LtWebApplicationTests {
 
     @Test
     public void testDBU() {
-        String token = (String) tokenService.getAccessToken().getData();
-        WxFansList list = WxTokenUtil.getFansListUrl(token, "");
-        redisUtil.set("next_openid",list.nextOpenid,0L);
-        List<WxUserBaseInfoVo> baseInfoVos = new ArrayList<WxUserBaseInfoVo>();
-        list.data.forEach(i -> {
-            baseInfoVos.add(WxTokenUtil.getMoreInfo(token, i.toString()));
-        });
-        redisUtil.set("userInfo",baseInfoVos, RedisConstants.datebase2,0L);
+//        String token = (String) tokenService.getAccessToken().getData();
+//        WxFansList list = WxTokenUtil.getFansListUrl(token, "");
+//        redisUtil.set("next_openid",list.nextOpenid,0L);
+//        List<WxUserBaseInfoVo> baseInfoVos = new ArrayList<WxUserBaseInfoVo>();
+//        list.data.forEach(i -> {
+//            baseInfoVos.add(WxTokenUtil.getMoreInfo(token, i.toString()));
+//        });
+//        redisUtil.set("userInfo",baseInfoVos, RedisConstants.datebase2,0L);
     }
 
     @Test
     public void sendMessage() {
-        String token = (String) tokenService.getAccessToken().getData();
-        SendOrderPaySuccessMsg.sendMessage(token,"onhAr1eEQ8QUJroJ3fiIgixLPW24");
+//        String token = (String) tokenService.getAccessToken().getData();
+//        SendOrderPaySuccessMsg.sendMessage(token,"onhAr1eEQ8QUJroJ3fiIgixLPW24");
     }
 }
