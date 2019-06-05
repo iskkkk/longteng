@@ -9,6 +9,7 @@ package com.alon.common.result;
  **/
 public class CodeMessage {
     private Integer code;
+    private String codes;
     private String message;
 
     //通用的错误码
@@ -56,6 +57,10 @@ public class CodeMessage {
         this.code = code;
         this.message = message;
     }
+    public CodeMessage(String codes, String message) {
+        this.codes = codes;
+        this.message = message;
+    }
 
     public Integer getCode() {
         return code;
@@ -73,10 +78,19 @@ public class CodeMessage {
         this.message = message;
     }
 
+    public String getCodes() {
+        return codes;
+    }
+
+    public void setCodes(String codes) {
+        this.codes = codes;
+    }
+
     @Override
     public String toString() {
         return "CodeMessage{" +
                 "code=" + code +
+                ", codes='" + codes + '\'' +
                 ", message='" + message + '\'' +
                 '}';
     }
