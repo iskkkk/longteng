@@ -1,5 +1,5 @@
 # longteng
-多maven分布式模块项目搭建  
+多maven模块项目搭建  
 lt-parent   父模块  
 lt-common   不需要依赖其他子模块  
 lt-model    暂时不需要依赖其他子模块  
