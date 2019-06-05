@@ -19,7 +19,7 @@ import org.springframework.util.CollectionUtils;
 
 /**
  * @ClassName WxInfoServiceImpl
- * @Description TODO
+ * @Description 用户授权获取用户信息实现类
  * @Author 一股清风
  * @Date 2019/5/21 16:34
  * @Version 1.0
@@ -37,10 +37,13 @@ public class WxInfoServiceImpl implements WxInfoService {
     @Autowired
     private WxTokenService tokenService;
 
+    @Autowired
+    private UserBaseInfoUtil userBaseInfoUtil;
+
     @Override
     public ResultData getUserInfo(String code) {
         WxUserInfo userInfo = null;
-        ResultData data = UserBaseInfoUtil.getUserInfo(code);
+        ResultData data = userBaseInfoUtil.getUserInfo(code);
         WxUserBaseInfoVo infoVo = (WxUserBaseInfoVo) data.getData();
         String token = (String) tokenService.getAccessToken().getData();
         infoVo = WxTokenUtil.getMoreInfo(token,infoVo.openid);

@@ -1,6 +1,7 @@
 package com.alon.common.third.wx;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alon.common.config.LtConfigParams;
 import com.alon.common.constant.DateFormatterConstant;
 import com.alon.common.constant.WxUrlConstant;
 import com.alon.common.result.ResultData;
@@ -10,6 +11,8 @@ import com.alon.common.vo.wx.TokenVo;
 import com.alon.common.vo.wx.WxFansList;
 import com.alon.common.vo.wx.WxUserBaseInfoVo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -17,22 +20,26 @@ import java.util.TreeMap;
 
 /**
  * @ClassName WxTokenUtil
- * @Description TODO
+ * @Description 请求微信access_token
  * @Author 一股清风
  * @Date 2019/5/21 14:04
  * @Version 1.0
  **/
 @Slf4j
+@Component
 public class WxTokenUtil {
+
+    @Autowired
+    private LtConfigParams params;
     /**
       * 方法表述: 获取access_token
       * @Author 一股清风
       * @Date 14:05 2019/5/21
       * @return com.alon.common.result.ResultData
     */
-    public static ResultData<TokenVo> getAccessToken(){
-        String appid = "";
-        String appsecret = "";
+    public ResultData<TokenVo> getAccessToken(){
+        String appid = params.appId;
+        String appsecret = params.appSecret;
         TokenVo redisVo = new TokenVo();
         String url = WxUrlConstant.TOKEN_URL + "token?";
         Map<String,Object> map = new TreeMap<>();

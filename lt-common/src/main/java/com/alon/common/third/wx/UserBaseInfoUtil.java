@@ -1,11 +1,14 @@
 package com.alon.common.third.wx;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alon.common.config.LtConfigParams;
 import com.alon.common.constant.WxUrlConstant;
 import com.alon.common.result.ResultData;
 import com.alon.common.utils.HttpClientUtils;
 import com.alon.common.vo.wx.WxUserBaseInfoVo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -18,11 +21,15 @@ import java.util.TreeMap;
  * @Version 1.0
  **/
 @Slf4j
+@Component
 public class UserBaseInfoUtil {
 
-    public static ResultData<WxUserBaseInfoVo> getUserInfo(String code) {
-        String appid = "";
-        String secret = "";
+    @Autowired
+    private LtConfigParams params;
+
+    public ResultData<WxUserBaseInfoVo> getUserInfo(String code) {
+        String appid = params.appId;
+        String secret = params.appSecret;
         String url = WxUrlConstant.USER_GRANT_URL + "access_token?";
         Map<String,Object> map = new TreeMap<>();
         map.put("appid",appid);

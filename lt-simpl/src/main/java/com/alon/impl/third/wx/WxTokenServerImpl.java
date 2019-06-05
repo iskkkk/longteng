@@ -24,11 +24,14 @@ public class WxTokenServerImpl implements WxTokenService {
     @Autowired
     private RedisUtil redisUtil;
 
+    @Autowired
+    private WxTokenUtil tokenUtil;
+
     @Override
     public ResultData getAccessToken() {
         String token1 = (String) redisUtil.get("access_token", RedisConstants.datebase2);
         if (StringUtils.isBlank(token1)) {
-            ResultData token = WxTokenUtil.getAccessToken();
+            ResultData token = tokenUtil.getAccessToken();
             TokenVo tokenVo = (TokenVo) token.getData();
             if (null != tokenVo.token) {
                 token1 = tokenVo.token;
