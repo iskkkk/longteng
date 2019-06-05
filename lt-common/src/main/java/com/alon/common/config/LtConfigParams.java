@@ -18,4 +18,10 @@ public class LtConfigParams {
     @Value("${lt.wx.appSecret}")
     public String appSecret;
 
+    @Value("${lt.wx.mchId}")
+    public String mchId;
+
+    @Value("${lt.wx.key}")
+    public String key;
+
 }

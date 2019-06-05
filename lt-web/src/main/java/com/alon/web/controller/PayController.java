@@ -39,10 +39,7 @@ public class PayController {
     @PostMapping("/wx_pay")
     public ResultData wxPay() {
         WxPayForm payForm = new WxPayForm();
-        payForm.appId = "";
-        payForm.mchId = "";
-        payForm.key = "";
-        payForm.callbackUrl = "www.baidu.com";
+        payForm.callbackUrl = "http://aloning.imwork.net/static/cacker.png";
         payForm.tradeType = "JSAPI";
         ResultData s = payService.wxPay(payForm);
         if (s.getCode() != 0) {

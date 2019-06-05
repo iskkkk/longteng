@@ -1,5 +1,6 @@
 package com.alon.impl.pay;
 
+import com.alon.common.config.LtConfigParams;
 import com.alon.common.constant.WxUrlConstant;
 import com.alon.common.dto.pay.WxPayForm;
 import com.alon.common.result.CodeMessage;
@@ -10,6 +11,7 @@ import com.alon.impl.webSocket.WebSocketHandler;
 import com.alon.service.pay.PayService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +34,9 @@ import java.util.TreeMap;
 @Service
 public class PayServiceImpl implements PayService {
 
+    @Autowired
+    private LtConfigParams params;
+
     @Override
     public ResultData wxPay(WxPayForm payForm) {
 
@@ -39,8 +44,8 @@ public class PayServiceImpl implements PayService {
         String outTradeNo = OrderNoUtils.getOrderNo(); // 订单流水号和系统的订单号不是一个
 
         Map<String, String> payParams = new HashMap<String, String>();
-        payParams.put("appid", payForm.appId);
-        payParams.put("mch_id", payForm.mchId);
+        payParams.put("appid", params.appId);
+        payParams.put("mch_id", params.mchId);
         payParams.put("nonce_str", payForm.nonceStr);
         payParams.put("body", payForm.body);
         payParams.put("out_trade_no", outTradeNo);
@@ -60,7 +65,7 @@ public class PayServiceImpl implements PayService {
             payParams.put("openid", payForm.openId);
         }
         payParams.put("receipt", payForm.receipt);
-        String sign = SignUtils.sign(payForm.key,payParams);
+        String sign = SignUtils.sign(params.key,payParams);
         payParams.put("sign",sign);
 
         String xml = XmlUtils.toXml(payParams, true);
@@ -168,7 +173,7 @@ public class PayServiceImpl implements PayService {
             packageParams.put(parameter, v);
         }
         // 账号信息
-        String key = ""; // key
+        String key = "TZnI72pLwQjAqaf1Bnw2izrTZRPDElSf"; // key
         log.info("解析结果：" + packageParams);
         //判断签名是否正确
         if(SignUtils.isTenpaySign("UTF-8", packageParams,key)) {
