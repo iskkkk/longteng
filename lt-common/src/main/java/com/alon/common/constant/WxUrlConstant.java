@@ -21,4 +21,7 @@ public class WxUrlConstant {
     public static final String JSPAY = "JSAPI";
     public static final String SUCCESS = "SUCCESS";
 
+    //发送模板消息
+    public static final String SEND_TEMPLE = "https://api.weixin.qq.com/cgi-bin/message/template/";
+
 }
