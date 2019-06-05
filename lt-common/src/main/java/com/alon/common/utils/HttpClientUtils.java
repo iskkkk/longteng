@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
@@ -14,6 +15,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
@@ -154,5 +156,56 @@ public class HttpClientUtils {
             httpGet.releaseConnection();
         }
         return  jsonObject;
+    }
+
+    /**
+      * 方法表述: post请求（用于请求json格式的参数）
+      * @Author 一股清风
+      * @Date 18:46 2019/5/29
+      * @param       url
+     * @param       params
+      * @return java.lang.String
+    */
+    public static String doPost(String url, String params){
+
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost(url);// 创建httpPost     
+        httpPost.setHeader("Accept", "application/json");
+        httpPost.setHeader("Content-Type", "application/json");
+        String charSet = "UTF-8";
+        StringEntity entity = new StringEntity(params, charSet);
+        httpPost.setEntity(entity);
+        CloseableHttpResponse response = null;
+
+        try {
+            response = httpclient.execute(httpPost);
+            StatusLine status = response.getStatusLine();
+            int state = status.getStatusCode();
+            if (state == 200) {
+                HttpEntity responseEntity = response.getEntity();
+                String jsonString = EntityUtils.toString(responseEntity);
+                return jsonString;
+            }
+            else{
+                log.error("请求返回:"+state+"("+url+")");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        } finally {
+            if (response != null) {
+                try {
+                    response.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                httpclient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }
