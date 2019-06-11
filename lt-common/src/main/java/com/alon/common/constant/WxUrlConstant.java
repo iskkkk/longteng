@@ -23,5 +23,12 @@ public class WxUrlConstant {
 
     //发送模板消息
     public static final String SEND_TEMPLE = "https://api.weixin.qq.com/cgi-bin/message/template/";
+    /*==============================代金券API列表==============================*/
+    //条件查询批次列表API
+    public static final String SELECT_BATCH = "https://api.mch.weixin.qq.com/mmpaymkttransfers/query_coupon_stock";
+
+    public static final String WX_CARD_ACTIVITY_CREATE_URL = "https://api.weixin.qq.com/card/mkt/activity/create?access_token=";
+
+
 
 }

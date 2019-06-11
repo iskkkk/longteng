@@ -3,6 +3,8 @@ package com.alon.common.utils;
 import com.alon.common.constant.DateFormatterConstant;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -73,7 +75,90 @@ public class DateFormUtils {
         return String.valueOf(timestamp.getTime()/1000);
     }
 
+    /**
+      * 方法表述: 得到十位数的时间戳
+      * @Author zoujiulong
+      * @Date 18:13 2019/6/11
+      * @param       dateStr
+      * @return long
+    */
+    public static long getTenTimeByDate(String dateStr) {
+        return convertAsDate(dateStr).getTime() / 1000;
+    }
+
+    /**
+      * 方法表述: 把日期字符串转换为日期类型
+      * @Author zoujiulong
+      * @Date 18:13 2019/6/11
+      * @param       dateStr
+      * @return java.util.Date
+    */
+    public static Date convertAsDate(String dateStr) {
+        if (dateStr == null || "".equals(dateStr)) {
+            return null;
+        }
+        DateFormat fmt = null;
+        if (dateStr.matches("\\d{14}")) {
+            fmt = new SimpleDateFormat(DateFormatterConstant.TIME_FORMAT_SHORT);
+        } else if (dateStr
+                .matches("\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}")) {
+            fmt = new SimpleDateFormat(DateFormatterConstant.TIME_FORMAT_NORMAL);
+        } else if (dateStr
+                .matches("\\d{1,2}/\\d{1,2}/\\d{4} \\d{1,2}:\\d{1,2}:\\d{1,2}")) {
+            fmt = new SimpleDateFormat(DateFormatterConstant.TIME_FORMAT_ENGLISH);
+        } else if (dateStr
+                .matches("\\d{4}年\\d{1,2}月\\d{1,2}日 \\d{1,2}时\\d{1,2}分\\d{1,2}秒")) {
+            fmt = new SimpleDateFormat(DateFormatterConstant.TIME_FORMAT_CHINA);
+        } else if (dateStr.matches("\\d{8}")) {
+            fmt = new SimpleDateFormat(DateFormatterConstant.DATE_FORMAT_SHORT);
+        } else if (dateStr.matches("\\d{4}-\\d{1,2}-\\d{1,2}")) {
+            fmt = new SimpleDateFormat(DateFormatterConstant.DATE_FORMAT_NORMAL);
+        } else if (dateStr.matches("\\d{1,2}/\\d{1,2}/\\d{4}")) {
+            fmt = new SimpleDateFormat(DateFormatterConstant.DATE_FORMAT_ENGLISH);
+        } else if (dateStr.matches("\\d{4}年\\d{1,2}月\\d{1,2}日")) {
+            fmt = new SimpleDateFormat(DateFormatterConstant.DATE_FORMAT_CHINA);
+        } else if (dateStr.matches("\\d{4}\\d{1,2}\\d{1,2}\\d{1,2}\\d{1,2}")) {
+            fmt = new SimpleDateFormat(DateFormatterConstant.DATE_FORMAT_MINUTE);
+        } else if (dateStr.matches("\\d{1,2}:\\d{1,2}:\\d{1,2}")) {
+            fmt = new SimpleDateFormat(DateFormatterConstant.TIME_FORMAT_SHORT_S);
+        }
+        try {
+            return fmt.parse(dateStr);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException(
+                    "Date or Time String is invalid.");
+        }
+    }
+
+    /**
+      * 方法表述: 比较两个字符串格式的时间大小<br/>
+     * 如果第二个时间大于第一个时间返回true,否则返回false
+      * @Author zoujiulong
+      * @Date 18:30 2019/6/11
+      * @param       strFirst 第一个时间
+     * @param       strSecond 第二个时间
+     * @param       strFormat 时间格式化方式 eg:"yyyy-MM-dd HH:mm:ss"," yyyy-MM-dd"
+      * @return boolean true-第二个时间晚于第一个时间,false-第二个时间不晚于第一个时间
+    */
+    public static boolean latterThan(String strFirst, String strSecond,
+                                     String strFormat) {
+        SimpleDateFormat ft = new SimpleDateFormat(strFormat);
+        try {
+            Date date1 = ft.parse(strFirst);
+            Date date2 = ft.parse(strSecond);
+            long quot = date2.getTime() - date1.getTime();
+            if (0 < quot) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
-        System.out.println(stringToDate("2018-02-01 14:39:19", DateFormatterConstant.YEAR_MONTH_DAY_HH_MM_SS));
+        System.out.println(stringToDate("2018-02-01 14:39:19", DateFormatterConstant.TIME_FORMAT_NORMAL));
     }
 }

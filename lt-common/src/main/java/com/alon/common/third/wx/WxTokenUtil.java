@@ -31,6 +31,7 @@ public class WxTokenUtil {
 
     @Autowired
     private LtConfigParams params;
+
     /**
       * 方法表述: 获取access_token
       * @Author 一股清风
@@ -124,7 +125,7 @@ public class WxTokenUtil {
         infoVo.remark = (String) map.get("remark");
         Integer time = (Integer) map.get("subscribe_time");
         if (null != time) {
-            infoVo.subscribeTime = DateFormUtils.stampToDate(Long.valueOf(time), DateFormatterConstant.YEAR_MONTH_DAY_HH_MM_SS);
+            infoVo.subscribeTime = DateFormUtils.stampToDate(Long.valueOf(time), DateFormatterConstant.TIME_FORMAT_NORMAL);
         }
         infoVo.subscribeScene = (String) map.get("subscribe_scene");
         infoVo.qrSceneStr = (String) map.get("qr_scene_str");
