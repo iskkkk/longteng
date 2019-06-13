@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 
 /**
  * @ClassName IsMobile
- * @Description TODO
+ * @Description 自定义注解
  * @Author 一股清风
  * @Date 2019/5/20 14:45
  * @Version 1.0
