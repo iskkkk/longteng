@@ -16,6 +16,7 @@
         <module>../lt-spring-exchange</module>
         <module>../lt-boot-rabbit</module>
         <module>../lt-shiro</module>
+        <module>../common-dubbo</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -31,11 +32,11 @@
         <service.version>1.0-SNAPSHOT</service.version>
         <simpl.version>1.0-SNAPSHOT</simpl.version>
         <lt-boot-amqp.version>1.0-SNAPSHOT</lt-boot-amqp.version>
-        <lt-shiro.version.version>1.0-SNAPSHOT</lt-shiro.version.version>
+        <lt-shiro.version>1.0-SNAPSHOT</lt-shiro.version>
+        <lt-common-dubbo.version>1.0-SNAPSHOT</lt-common-dubbo.version>
 
         <fastjson.version>1.2.49</fastjson.version>
         <dubbo-starter.version>1.1.1</dubbo-starter.version>
-        <dubbo.version>2.6.3</dubbo.version>
         <mybatis.version>1.3.2</mybatis.version>
         <httpclient.version>4.5.6</httpclient.version>
         <commons-lang3.version>3.7</commons-lang3.version>
@@ -62,6 +63,10 @@
         <axis2-adb.version>1.7.8</axis2-adb.version>
         <axis2-transport-local.version>1.7.8</axis2-transport-local.version>
         <axis2-transport-http.version>1.7.8</axis2-transport-http.version>
+        <boot-dubbo.version>1.0.0</boot-dubbo.version>
+        <zk.version>3.4.10</zk.version>
+        <curator.version>2.12.0</curator.version>
+        <dubbo.version>2.7.1</dubbo.version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -77,12 +82,6 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>dubbo</artifactId>
-                <version>${dubbo.version}</version>
             </dependency>
 
             <dependency>
@@ -255,6 +254,35 @@
                 <version>${axis2-transport-http.version}</version>
             </dependency>
             <!--========================================================-->
+
+            <!-- Aapche Dubbo  -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>${zk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>

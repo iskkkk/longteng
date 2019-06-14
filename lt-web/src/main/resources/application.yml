@@ -30,7 +30,7 @@ spring:
     jest:
       uris: http://192.168.16.128:9200
   profiles:
-    include: mq
+    include: mq,dubbo
 
 mybatis:
   mapper-locations: classpath*:mapping/*.xml
