@@ -1,5 +1,7 @@
 package com.alon.common.result;
 
+import java.io.Serializable;
+
 /**
  * @ClassName CodeMessage
  * @Description TODO
@@ -7,7 +9,7 @@ package com.alon.common.result;
  * @Date 2019/5/17 14:14
  * @Version 1.0
  **/
-public class CodeMessage {
+public class CodeMessage implements Serializable {
     private Integer code;
     private String codes;
     private String message;

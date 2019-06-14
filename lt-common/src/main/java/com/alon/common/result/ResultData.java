@@ -1,5 +1,7 @@
 package com.alon.common.result;
 
+import java.io.Serializable;
+
 /**
  * @ClassName ResultData
  * @Description 返回结构封装集
@@ -7,7 +9,7 @@ package com.alon.common.result;
  * @Date 2019/5/17 14:33
  * @Version 1.0
  **/
-public class ResultData<T> {
+public class ResultData<T> implements Serializable {
     private Integer code;
     private String msg;
     private T data;
