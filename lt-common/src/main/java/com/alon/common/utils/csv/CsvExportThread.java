@@ -1,10 +1,10 @@
 package com.alon.common.utils.csv;
 
 import javax.servlet.ServletContext;
+import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class CsvExportThread extends Thread {
 
-    public static Queue<Object> queue;//Queue是java自己的队列，具体可看API，是同步安全的
+    public static Queue<Object> queue;
     static {
         queue = new ConcurrentLinkedQueue<Object>();
     }
@@ -28,13 +28,27 @@ public class CsvExportThread extends Thread {
         this.context = context;
     }
 
+    @Override
     public void run() {
         if (!isRunning) {
             isRunning = true;
             System.out.println("开始执行查询并放入queue队列");
             try {
-                CsvExportThread();
-            } catch (IOException e) {
+                // 设置表格头
+                Object[] head = {"小说名称","作者"};
+                String[] propertys = new String[]{"id","name"};
+                List<Test> testList = new ArrayList<Test>();
+                Test test = null;
+                test = new Test();
+                test.setId(1);
+                test.setName("123");
+                testList.add(test);
+                test = new Test();
+                test.setId(2);
+                test.setName("1234");
+                testList.add(test);
+                download(head,propertys,testList,testList.size(),10000,"123test","/tmp");
+            } catch (Exception e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
             System.out.println("查询并放入queue队列结束");
@@ -45,51 +59,63 @@ public class CsvExportThread extends Thread {
         }
     }
 
+    /**
+     * 方法表述: 下载
+     * @Author zoujiulong
+     * @Date 15:07 2019/7/3
+     * @param       head
+     * @param       row
+     * @param       data
+     * @param       listCount 数据总数
+     * @param       pageSize 设置每一个excel文件导出的数量
+     * @return void
+     */
+    public  static <T> String download(Object[] head,String[] row,List<T> data,Integer listCount,Integer pageSize,String name,String downloadPath){
 
-    public static void CsvExportThread() throws IOException {
-
-        // 设置数据
-        int listCount = 165100;
-        //导出6万以上数据。。。
-        int pageSize= 50000;//设置每一个excel文件导出的数量
-        int quotient = listCount/pageSize+(listCount%pageSize > 0 ? 1:0)+1;//循环次数
+        //循环次数
+        int quotient = listCount/pageSize+(listCount%pageSize > 0 ? 1:0);
+        //设置标头
+        List<Object> headList = Arrays.asList(head);
+        List<File> srcfile=new ArrayList<File>();
+        String downloadFilePath = "";
         for(int i=0;i<quotient;i++){
-            List<Object> list = new ArrayList<Object>();
+            List<T> list = new ArrayList<T>();
             int startCount = ((i> 0 ? i:0)*pageSize);
             if((listCount%pageSize)>0){
                 if(i==(quotient-1)){
-                    pageSize = (int)(listCount%pageSize);//余数
+                    //余数
+                    pageSize = (int)(listCount%pageSize);
                 }
             }
-            list.add(i);
-            list.add(startCount);
-            list.add(pageSize);
+
+            double num = Math.ceil(data.size() / pageSize);
+            //每次开始读取的下标
+            int n =i*pageSize;
+            if(i+1<num){
+                //i+1 代表 （下一页）
+                list = data.subList(n, n+pageSize);
+            }else if(i+1 == num){
+                //当位于最后一页时，计算要读多少个数（ aa.size()-i*50）
+                list =  data.subList(n, n+data.size()-i*pageSize);
+            }
+
             queue.offer(list);
+            List<List<Object>> dataList = CsvExportBatch.getNovel(startCount, pageSize,row,list);
+            downloadFilePath = downloadPath.concat("download/").concat("download/");
+            File desc = new File(downloadFilePath);
+            if (!desc.getParentFile().exists()) {
+                desc.getParentFile().mkdirs();
+            }
+            // 导出文件名称
+            String  fileName = String.valueOf(i);
+            // 导出CSV文件
+            File csvFile = CSVUtils.createCSVFile(headList, dataList, downloadFilePath, fileName);
+            srcfile.add(csvFile);
             System.out.println(startCount+"----------------"+pageSize);
         }
-//        ZipUtil.zipFiles(srcfile, new File("C:\\cap4j\\download.zip"));
-//        ZipUtil.dropFolderOrFile(new File("C:\\cap4j\\download"));
-        long endTime = System.currentTimeMillis();
-        //分批CSV导出96715
-    }
-
-    private static List<List<Object>> getNovel(int startCount,int pagesize) {
-        List<List<Object>> dataList = new ArrayList<List<Object>>();
-        List<Object> rowList = null;
-        for (int i = 0; i < pagesize; i++) {
-            rowList = new ArrayList<Object>();
-            Object[] row = new Object[4];
-            int endCount = startCount+i;
-            row[0] = endCount;
-            row[1] = "风云第一刀"+endCount+"";
-            row[2] = "古龙"+endCount+"";
-            row[3] = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-            for(int j=0;j<row.length;j++){
-                rowList.add(row[j]);
-            }
-            dataList.add(rowList);
-        }
-        return dataList;
+        ZipUtil.zipFiles(srcfile, new File(downloadPath.concat("download/").concat(name).concat(".zip")));
+        ZipUtil.dropFolderOrFile(new File(downloadFilePath));
+        return downloadFilePath;
     }
 
     public static void main(String[] args) throws IOException {
