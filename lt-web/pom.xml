@@ -27,11 +27,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.alon</groupId>
-            <artifactId>lt-shiro</artifactId>
-            <version>${lt-shiro.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

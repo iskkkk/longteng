@@ -39,5 +39,11 @@
         </dependency>
 
         <!--dubbo END====================================================-->
+
+        <dependency>
+            <groupId>com.alon</groupId>
+            <artifactId>lt-shiro</artifactId>
+            <version>${lt-shiro.version}</version>
+        </dependency>
     </dependencies>
 </project>

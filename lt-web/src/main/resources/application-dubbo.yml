@@ -7,3 +7,7 @@ dubbo:
   protocol:
     name: dubbo
     port: 20880
+  consumer:
+    check: false
+    retries: 0
+    timeout: 50000

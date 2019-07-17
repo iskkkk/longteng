@@ -85,6 +85,7 @@ public class ShiroConfig {
 
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/static/**", "anon");
+        filterMap.put("/rpc/**", "anon");
         filterMap.put("/login/**", "anon");
         filterMap.put("/pay/**", "anon");
         filterMap.put("/MP_verify_1qC3Vg8lmyHBTMBT.txt", "anon");
