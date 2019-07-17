@@ -1,9 +1,7 @@
 package com.alon.common.utils.csv;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class ExecutorThread implements Runnable {
        *这里就是线程需要处理的业务了，可以换成自己的业务
        */
         try {
-            if(obj != null) {
+            /*if(obj != null) {
                 // 设置表格头
                 Object[] head = {"序号","小说名称","作者","出版日期"};
                 List<Object> headList = Arrays.asList(head);
@@ -39,7 +37,7 @@ public class ExecutorThread implements Runnable {
                 // 导出CSV文件
                 File csvFile = CSVUtils.createCSVFile(headList, dataList, downloadFilePath, fileName);
                 long endTime = System.currentTimeMillis();
-            }
+            }*/
             Thread.sleep(delay);
         } catch (InterruptedException ignored) {
         }
