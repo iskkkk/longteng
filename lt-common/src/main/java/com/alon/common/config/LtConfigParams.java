@@ -24,4 +24,8 @@ public class LtConfigParams {
     @Value("${lt.wx.key}")
     public String key;
 
+    @Value("${lt.download}")
+    public String download;
+
+
 }
