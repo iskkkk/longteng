@@ -14,7 +14,7 @@
                                  <!--connectionURL="jdbc:oracle:thin:@172.20.16.***:1521:CARGO" userId="***"-->
                                  <!--password="***"/>-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                                 connectionURL="jdbc:mysql://localhost:3306/lt_commerce" userId="root"
+                                 connectionURL="jdbc:mysql://localhost:3307/yh_db" userId="root"
                                  password="root"/>
 
                  <javaModelGenerator targetPackage="com.alon.model.pojo"
@@ -38,7 +38,7 @@
                 enableDeleteByExample="false" enableSelectByExample="false"
                 selectByExampleQueryId="false"/>-->
 
-                 <table tableName="WX_USER_INFO" domainObjectName="FeeBase"
+                 <table tableName="yh_mini_user" domainObjectName="FeeBase"
                         enableCountByExample="false" enableUpdateByExample="false"
                         enableDeleteByExample="false" enableSelectByExample="false"
                         selectByExampleQueryId="false">

@@ -72,7 +72,7 @@ public class LoginController {
 
     @GetMapping("callBack")
     public ResultData getCode(HttpServletRequest req, HttpServletResponse resp) {
-        String code = code = req.getParameter("code");
+        String code = req.getParameter("code");
         //通过code换取网页授权access_token,微信返回的参数会自动返回
         log.info("code:" + code);
         ResultData info = wxInfoService.getUserInfo(code);
