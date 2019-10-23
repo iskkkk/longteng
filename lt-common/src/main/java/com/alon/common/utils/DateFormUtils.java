@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -158,7 +161,58 @@ public class DateFormUtils {
         return false;
     }
 
+    /**
+      * 方法表述: 获取过去第几天的日期
+      * @Author zoujiulong
+      * @Date 18:36 2019/10/23 
+      * @param       past
+      * @return java.lang.String
+    */
+    public static String getPastDate(int past) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - past);
+        Date today = calendar.getTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String result = format.format(today);
+        return result;
+    }
+
+    /**
+      * 方法表述: 获取未来 第 past 天的日期
+      * @Author zoujiulong
+      * @Date 18:36 2019/10/23
+      * @param       past
+      * @return java.lang.String
+    */
+    public static String getFetureDate(int past) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + past);
+        Date today = calendar.getTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String result = format.format(today);
+        return result;
+    }
+
+    /**
+      * 方法表述: 获取过去或者未来 任意天内的日期数组
+      * @Author zoujiulong
+      * @Date 18:36 2019/10/23
+      * @param       intervals
+      * @return java.util.ArrayList<java.lang.String>
+    */
+    public static ArrayList<String> test(int intervals ) {
+        ArrayList<String> pastDaysList = new ArrayList<>();
+        ArrayList<String> fetureDaysList = new ArrayList<>();
+        for (int i = 0; i <intervals; i++) {
+            pastDaysList.add(getPastDate(i));
+            fetureDaysList.add(getFetureDate(i));
+        }
+        Collections.sort(pastDaysList);
+        return pastDaysList;
+    }
+
     public static void main(String[] args) {
         System.out.println(stringToDate("2018-02-01 14:39:19", DateFormatterConstant.TIME_FORMAT_NORMAL));
+        System.out.println(test(7));
     }
 }
