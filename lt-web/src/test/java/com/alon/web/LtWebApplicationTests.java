@@ -2,6 +2,8 @@ package com.alon.web;
 
 import com.alon.amqp.model.Employee;
 import com.alon.amqp.producer.MessageProducer;
+import com.alon.common.msg.EmailParam;
+import com.alon.common.msg.strategy.engine.SendMailEngineProcess;
 import com.alon.impl.redis.util.RedisUtil;
 import com.alon.service.third.wx.WxTokenService;
 import io.searchbox.client.JestClient;
@@ -32,6 +34,9 @@ public class LtWebApplicationTests {
     private MessageProducer messageProducer;
     @Autowired
     private WxTokenService tokenService;
+
+    @Autowired
+    private SendMailEngineProcess handle;
 
     @Test
     public void contextLoads() {
@@ -86,5 +91,13 @@ public class LtWebApplicationTests {
     public void sendMessage() {
 //        String token = (String) tokenService.getAccessToken().getData();
 //        SendOrderPaySuccessMsg.sendMessage(token,"onhAr1eEQ8QUJroJ3fiIgixLPW24");
+        String content = "test123212";
+        String cc = "";
+        String bcc = "";
+        EmailParam emailParam = new EmailParam("1442882303@qq.com","123",content,"111111",cc,bcc);
+        emailParam.bizNum = "1000001";
+        emailParam.file = "D:\\工单附件\\工单导入模板.xlsx";
+        handle.sendMail(emailParam);
     }
+
 }
